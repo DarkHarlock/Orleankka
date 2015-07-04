@@ -18,7 +18,7 @@ namespace Orleankka
         {
             string code = CodeOf(type);
 
-            if (codeMap.ContainsKey(code))
+            if (codeMap.ContainsKey(code) && !type.IsInterface)
             {
                 var existing = codeMap[code];
 
@@ -30,14 +30,15 @@ namespace Orleankka
                 throw new ArgumentException(string.Format("The type {0} has been already registered", type));
             }
 
-            codeMap.Add(code, type);
+            if (!type.IsInterface)
+                codeMap.Add(code, type);
             typeMap.Add(type, code);
         }
 
         public static Type RegisteredType(string code)
         {
             Type type;
-                
+
             if (!codeMap.TryGetValue(code, out type))
                 throw new InvalidOperationException(
                     String.Format("Unable to map type code '{0}' to the corresponding runtime type. Make sure that you've registered the assembly containing this type", code));
@@ -65,18 +66,23 @@ namespace Orleankka
         public static string CodeOf(Type type)
         {
             var att = type
-                .GetCustomAttributes(typeof(ActorTypeCodeAttribute), false)
-                .Cast<ActorTypeCodeAttribute>()
+                .GetCustomAttributes(typeof(ITypeCodeAttribute), false)
+                .Cast<ITypeCodeAttribute>()
                 .SingleOrDefault();
 
             return att != null ? att.Code : type.FullName;
         }
     }
 
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class ActorTypeCodeAttribute : Attribute
+    public interface ITypeCodeAttribute
     {
-        internal readonly string Code;
+        string Code { get; }
+    }
+
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class ActorTypeCodeAttribute : Attribute, ITypeCodeAttribute
+    {
+        private readonly string _code;
 
         public ActorTypeCodeAttribute(string code)
         {
@@ -85,7 +91,9 @@ namespace Orleankka
             if (code.Contains(ActorPath.Separator[0]))
                 throw new ArgumentException("Actor type code cannot contain path separator: " + code);
 
-            Code = code;
+            _code = code;
         }
+
+        public string Code { get { return _code; } }
     }
 }

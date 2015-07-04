@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orleankka", "Source\Orleankka\Orleankka.csproj", "{944568EA-BC0B-49BC-AF0F-B4A4A62858AC}"
 EndProject
@@ -42,7 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serialization", "Serializat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bond", "Bond", "{7E90255D-B97F-4560-AC27-CAA9B6AD1E47}"
 EndProject
-Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Deployment", "Source\Example.Azure.Deployment\Deployment.ccproj", "{4F29037C-903E-4425-A392-49F4383C6193}"
+Project("{F49C1087-0276-3414-85A5-638E675ABA44}") = "Deployment", "Source\Example.Azure.Deployment\Deployment.ccproj", "{4F29037C-903E-4425-A392-49F4383C6193}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Source\Example.Azure.Client\Client.csproj", "{3D7D093A-AFE7-438C-B9AA-9C3097E86050}"
 EndProject
@@ -91,6 +91,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Server", "Source\Example.Observers.Chat.Server\Chat.Server.csproj", "{355B546C-C246-4CEE-A302-7D453A81D3A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Client", "Source\Example.Observers.Chat.Client\Chat.Client.csproj", "{71F8DF3F-5D69-4E23-8AB7-937E2F3A01F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proxy", "Proxy", "{C59AD7BE-8655-4D22-ADF7-40CF5CD7833D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Proxy.Client", "Source\Example.Proxy.Client\Example.Proxy.Client.csproj", "{894DCCDB-C9D2-417D-B126-34F94E4EEADD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Proxy.Server", "Source\Example.Proxy.Server\Example.Proxy.Server.csproj", "{06D8A817-A142-45C4-9A5F-CB13FE39C498}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Proxy.ServerContracts", "Source\Example.Proxy.ServerContracts\Example.Proxy.ServerContracts.csproj", "{CF01D0FA-CF72-4ADA-8347-AD36237CF704}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -267,6 +275,24 @@ Global
 		{71F8DF3F-5D69-4E23-8AB7-937E2F3A01F2}.Package|Any CPU.Build.0 = Release|Any CPU
 		{71F8DF3F-5D69-4E23-8AB7-937E2F3A01F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71F8DF3F-5D69-4E23-8AB7-937E2F3A01F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{894DCCDB-C9D2-417D-B126-34F94E4EEADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{894DCCDB-C9D2-417D-B126-34F94E4EEADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{894DCCDB-C9D2-417D-B126-34F94E4EEADD}.Package|Any CPU.ActiveCfg = Release|Any CPU
+		{894DCCDB-C9D2-417D-B126-34F94E4EEADD}.Package|Any CPU.Build.0 = Release|Any CPU
+		{894DCCDB-C9D2-417D-B126-34F94E4EEADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{894DCCDB-C9D2-417D-B126-34F94E4EEADD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06D8A817-A142-45C4-9A5F-CB13FE39C498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06D8A817-A142-45C4-9A5F-CB13FE39C498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06D8A817-A142-45C4-9A5F-CB13FE39C498}.Package|Any CPU.ActiveCfg = Release|Any CPU
+		{06D8A817-A142-45C4-9A5F-CB13FE39C498}.Package|Any CPU.Build.0 = Release|Any CPU
+		{06D8A817-A142-45C4-9A5F-CB13FE39C498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06D8A817-A142-45C4-9A5F-CB13FE39C498}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF01D0FA-CF72-4ADA-8347-AD36237CF704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF01D0FA-CF72-4ADA-8347-AD36237CF704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF01D0FA-CF72-4ADA-8347-AD36237CF704}.Package|Any CPU.ActiveCfg = Release|Any CPU
+		{CF01D0FA-CF72-4ADA-8347-AD36237CF704}.Package|Any CPU.Build.0 = Release|Any CPU
+		{CF01D0FA-CF72-4ADA-8347-AD36237CF704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF01D0FA-CF72-4ADA-8347-AD36237CF704}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -307,5 +333,9 @@ Global
 		{A0E9475F-5076-4456-AA89-ECCB53BC3D8C} = {C9B497F6-87DA-40EF-933C-A572A7603991}
 		{355B546C-C246-4CEE-A302-7D453A81D3A2} = {A0E9475F-5076-4456-AA89-ECCB53BC3D8C}
 		{71F8DF3F-5D69-4E23-8AB7-937E2F3A01F2} = {A0E9475F-5076-4456-AA89-ECCB53BC3D8C}
+		{C59AD7BE-8655-4D22-ADF7-40CF5CD7833D} = {C9B497F6-87DA-40EF-933C-A572A7603991}
+		{894DCCDB-C9D2-417D-B126-34F94E4EEADD} = {C59AD7BE-8655-4D22-ADF7-40CF5CD7833D}
+		{06D8A817-A142-45C4-9A5F-CB13FE39C498} = {C59AD7BE-8655-4D22-ADF7-40CF5CD7833D}
+		{CF01D0FA-CF72-4ADA-8347-AD36237CF704} = {C59AD7BE-8655-4D22-ADF7-40CF5CD7833D}
 	EndGlobalSection
 EndGlobal

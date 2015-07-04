@@ -24,14 +24,18 @@ namespace Orleankka.Core
         {
             var actors = assembly
                 .GetTypes()
-                .Where(x =>
-                       !x.IsAbstract
-                       && typeof(Actor).IsAssignableFrom(x));
+                .Where(x => 
+                    (!x.IsAbstract && typeof(Actor).IsAssignableFrom(x)) ||
+                    (typeof(IActorProxyInterface).Namespace != x.Namespace && x.IsInterface && typeof(IActorProxyInterface).IsAssignableFrom(x))
+                );
 
             foreach (var type in actors)
             {
                 ActorTypeCode.Register(type);
-                ActorPrototype.Register(type);
+                if (!type.IsInterface)
+                {
+                    ActorPrototype.Register(type);
+                }
                 ActorEndpointDynamicFactory.Register(type);
             }
         }

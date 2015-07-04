@@ -66,10 +66,10 @@
     <Content Include="FSharp.Core.sigdata">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages.config" />
     <Compile Include="..\Orleankka.FSharp.Version.fs">
       <Link>Orleankka.FSharp.Version.fs</Link>
     </Compile>
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

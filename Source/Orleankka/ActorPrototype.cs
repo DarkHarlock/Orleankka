@@ -35,11 +35,16 @@ namespace Orleankka
 
         static Actor CreateInstance(Type actor)
         {
+            if (actor.IsInterface)
+                return null;
+
             return (Actor) Activator.CreateInstance(actor, nonPublic: true);
         }
 
         static ActorPrototype CreatePrototype(Actor actor)
         {
+            if (actor == null)
+                return null;
             return (ActorPrototype) Activator.CreateInstance(actor.Prototype, new object[]{actor.GetType()});
         }
 
@@ -57,7 +62,7 @@ namespace Orleankka
         internal static ActorPrototype Of(Type actor)
         {
             ActorPrototype prototype = cache.Find(actor);
-            return prototype ?? CreatePrototype(CreateInstance(actor));
+            return prototype ?? CreatePrototype(CreateInstance(actor)) ?? new ActorPrototype(actor);
         }
 
         public ActorPrototype(Type actor)

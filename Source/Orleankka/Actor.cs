@@ -11,6 +11,16 @@ namespace Orleankka
     using Utility;
     using Services;
     
+    public interface IActorProxyInterface
+    {
+
+    }
+
+    public interface INonUniformActorProxyInterface: IActorProxyInterface
+    {
+
+    }
+
     public abstract class Actor
     {
         ActorRef self;

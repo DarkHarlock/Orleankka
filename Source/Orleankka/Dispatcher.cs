@@ -12,7 +12,7 @@ namespace Orleankka
 
     class Dispatcher
     {
-        static readonly string[] conventions = {"On", "Handle", "Answer", "Apply"};
+        static readonly string[] conventions = { "On", "Handle", "Answer", "Apply" };
 
         readonly Dictionary<Type, Action<object, object>> voidHandlers =
              new Dictionary<Type, Action<object, object>>();
@@ -23,13 +23,14 @@ namespace Orleankka
         readonly Dictionary<Type, Func<object, object, Task<object>>> uniformHandlers =
              new Dictionary<Type, Func<object, object, Task<object>>>();
 
-        readonly Type actor;        
-        
+        readonly Type actor;
+
         public Dispatcher(Type actor)
         {
             this.actor = actor;
 
-            var methods = actor.GetMethods(BindingFlags.Instance | BindingFlags.Public)
+            var allmethods = actor.GetMethods(BindingFlags.Instance | BindingFlags.Public);
+            var methods = allmethods
                    .Where(m =>
                           m.IsPublic &&
                           m.GetParameters().Length == 1 &&
@@ -37,6 +38,21 @@ namespace Orleankka
                           !m.GetParameters()[0].IsRetval &&
                           !m.IsGenericMethod && !m.ContainsGenericParameters &&
                           conventions.Contains(m.Name));
+            if (typeof(INonUniformActorProxyInterface).IsAssignableFrom(actor))
+            {
+
+                var targetInterface = actor.GetInterfaces().Where(t => typeof(INonUniformActorProxyInterface).IsAssignableFrom(t)).FirstOrDefault();
+
+                var nonUniforms = targetInterface
+                    .GetMethods(BindingFlags.Instance | BindingFlags.Public)
+                    .Where(m => m.IsPublic &&
+                          m.GetParameters().Length == 1 &&
+                          !m.GetParameters()[0].IsOut &&
+                          !m.GetParameters()[0].IsRetval &&
+                          !m.IsGenericMethod && !m.ContainsGenericParameters);
+
+                methods = methods.Union(nonUniforms);
+            }
 
             foreach (var method in methods)
                 Register(method);
@@ -70,7 +86,7 @@ namespace Orleankka
                 RegisterVoid(method);
                 return;
             }
-            
+
             RegisterReply(method);
         }
 
@@ -125,11 +141,11 @@ namespace Orleankka
 
             internal HandlerNotFoundException(Type message)
                 : base(string.Format(description, message))
-            {}
+            { }
 
             protected HandlerNotFoundException(SerializationInfo info, StreamingContext context)
                 : base(info, context)
-            {}
+            { }
         }
 
         static class Bind
@@ -144,7 +160,7 @@ namespace Orleankka
                         .MakeGenericType(method.GetParameters()[0].ParameterType)
                         .GetMethod("Action", BindingFlags.Public | BindingFlags.Static);
 
-                    return (Action<object, object>)compiler.Invoke(null, new object[] {method, actor});
+                    return (Action<object, object>)compiler.Invoke(null, new object[] { method, actor });
                 }
 
                 public static Func<object, object, object> ReplyHandler(MethodInfo method, Type actor)
@@ -154,7 +170,7 @@ namespace Orleankka
                         .GetMethod("Func", BindingFlags.Public | BindingFlags.Static)
                         .MakeGenericMethod(method.ReturnType);
 
-                    return (Func<object, object, object>)compiler.Invoke(null, new object[] {method, actor});
+                    return (Func<object, object, object>)compiler.Invoke(null, new object[] { method, actor });
                 }
 
                 static class Void<TRequest>
@@ -187,7 +203,7 @@ namespace Orleankka
                         Action<object, object> action = Expression.Lambda<Action<object, object>>(call, target, request).Compile();
 
                         return action;
-                    }   
+                    }
                 }
 
                 static class Reply<TRequest>
@@ -225,7 +241,7 @@ namespace Orleankka
             }
 
             public static class Uniform
-            { 
+            {
                 public static Func<object, object, Task<object>> Handler(MethodInfo method, Type actor)
                 {
                     if (typeof(Task).IsAssignableFrom(method.ReturnType))
